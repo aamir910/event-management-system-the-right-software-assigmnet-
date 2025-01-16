@@ -1,44 +1,15 @@
 const express = require('express');
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
+const { registerUser, loginUser, getUserProfile } = require('../controllers/userController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// User Registration
-router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
-  
-  const userExists = await User.findOne({ email });
-  if (userExists) return res.status(400).json({ message: 'User already exists' });
+// Register route (No auth needed)
+router.post('/register', registerUser);
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  
-  const user = new User({
-    name,
-    email,
-    password: hashedPassword,
-  });
+// Login route (No auth needed)
+router.post('/login', loginUser);
 
-  try {
-    const newUser = await user.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// User Login
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email });
-  if (!user) return res.status(400).json({ message: 'User not found' });
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.json({ token });
-});
+// Get user profile (Protected route)
+router.get('/profile', authMiddleware, getUserProfile);
 
 module.exports = router;

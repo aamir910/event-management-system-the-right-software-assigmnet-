@@ -1,36 +1,18 @@
 const express = require('express');
-const Event = require('../models/Event');
-const User = require('../models/User');
 const router = express.Router();
+const { createEvent, getAllEvents, updateEvent, deleteEvent } = require('../controllers/eventController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// Create a new event
-router.post('/', async (req, res) => {
-  const { title, description, date, location, createdBy } = req.body;
+// Create event (Protected route)
+router.post('/create', authMiddleware, createEvent);
 
-  const event = new Event({
-    title,
-    description,
-    date,
-    location,
-    createdBy,
-  });
+// Get all events (Anyone can access)
+router.get('/all', getAllEvents);
 
-  try {
-    const newEvent = await event.save();
-    res.status(201).json(newEvent);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// Update event (Protected route)
+router.put('/update/:id', authMiddleware, updateEvent);
 
-// Get all events
-router.get('/', async (req, res) => {
-  try {
-    const events = await Event.find().populate('createdBy', 'name email');
-    res.json(events);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+// Delete event (Protected route)
+router.delete('/delete/:id', authMiddleware, deleteEvent);
 
 module.exports = router;
