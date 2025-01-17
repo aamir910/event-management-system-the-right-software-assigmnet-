@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
-import styles from '../styles/Register.module.css';
+import styles from '../styles/Register_login.module.css';
 
 const Register = () => {
   const handleRegister = async (values) => {
