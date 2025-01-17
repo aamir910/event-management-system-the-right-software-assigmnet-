@@ -97,7 +97,7 @@ const App = () => {
               </Routes>
             </div>
           </Content>
-          <AppFooter   />
+          <AppFooter  isDarkMode={isDarkMode}  />
         </Layout>
       </ConfigProvider>
     </Router>

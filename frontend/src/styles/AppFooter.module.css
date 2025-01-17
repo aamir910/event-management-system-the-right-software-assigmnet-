@@ -1,0 +1,28 @@
+/* AppFooter.module.css */
+
+/* Basic styling for footer */
+.footer {
+    padding: 20px;
+    background-color: #1a1a1a; /* Default dark background */
+    color: #fff; /* Default light text */
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #333;
+  }
+  
+  /* Light theme styles */
+  .footerLight {
+    background-color: #f0f0f0; /* Light background */
+    color: #000; /* Dark text for light mode */
+  }
+  
+  /* Add hover effect for text */
+  .footer a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
