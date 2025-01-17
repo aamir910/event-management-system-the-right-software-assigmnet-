@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Switch, Avatar, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../redux/slices/themeSlice'; // Import action
 import styles from '../styles/AppHeader.module.css';
 
 const { Header } = Layout;
 const { Text } = Typography;
 
 const AppHeader = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get theme from store
   const userName = 'Aamir Yasin'; // Replace with dynamic user data
 
+  // Toggle theme handler
   const handleThemeChange = (checked) => {
-    setIsDarkMode(checked);
-    document.body.setAttribute('data-theme', checked ? 'dark' : 'light');
+    dispatch(toggleTheme()); // Dispatch the action to toggle theme
   };
+
+  // Effect to update the body theme class
+  useEffect(() => {
+    document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   return (
     <Header className={isDarkMode ? styles.darkHeader : styles.lightHeader}>

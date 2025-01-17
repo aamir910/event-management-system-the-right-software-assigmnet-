@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from '../styles/Register_login.module.css';
+import styles from '../styles/Register_login.module.css';  // Keep the styles
 
 const Login = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
@@ -30,15 +30,13 @@ const Login = ({ onLogin }) => {
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
-        >
+          rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}>
           <Input />
         </Form.Item>
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
+          rules={[{ required: true, message: 'Please input your password!' }]}>
           <Input.Password />
         </Form.Item>
         <Form.Item name="remember" valuePropName="checked">
@@ -49,8 +47,7 @@ const Login = ({ onLogin }) => {
             type="primary"
             htmlType="submit"
             loading={loading}
-            className={styles.registerButton}
-          >
+            className={styles.registerButton}>
             Log in
           </Button>
         </Form.Item>

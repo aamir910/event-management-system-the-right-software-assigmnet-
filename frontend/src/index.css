@@ -1,0 +1,12 @@
+/* Light theme */
+body[data-theme='light'] {
+    background-color: #f0f2f5;
+    color: black;
+  }
+  
+  /* Dark theme */
+  body[data-theme='dark'] {
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
