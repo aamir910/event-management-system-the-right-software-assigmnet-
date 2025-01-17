@@ -22,11 +22,13 @@ const Login = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         const { token } = data;
-
+console.log(data , "here is the token there ")
         localStorage.setItem('authToken', token);
         onLogin(token);
         message.success('Login successful!');
-        navigate('/dashboard');
+         // navigate('/dashboard'); 
+
+
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Login failed');

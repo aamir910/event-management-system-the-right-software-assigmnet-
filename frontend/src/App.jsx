@@ -11,14 +11,15 @@ import Dashboard from "./pages/Dashboard";
 import EventForm from "./components/EventForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { toggleTheme } from "./redux/slices/themeSlice"; // Import toggleTheme action
+import EventPage from "./pages/EventPage";
 
 const { Content } = Layout;
 
 const App = () => {
   const dispatch = useDispatch();
-  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); // Keep auth state as it was
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); // Keep auth state as it was
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Access dark mode from Redux
-  const isAuthenticated = true;
+
   const handleLogin = (authToken) => {
     // Simulate setting token and authentication
     dispatch({ type: "auth/login", payload: authToken });
@@ -78,6 +79,15 @@ const App = () => {
                     </ProtectedRoute>
                   }
                 />
+ <Route
+                  path="/EventPage"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <EventPage />
+                    </ProtectedRoute>
+                  }
+                />
+
                 <Route
                   path="/create-event"
                   element={

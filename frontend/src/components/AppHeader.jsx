@@ -41,6 +41,9 @@ const AppHeader = () => {
           <Menu.Item key="login">
             <Link to="/login">Login</Link>
           </Menu.Item>
+          <Menu.Item key="EventPage">
+            <Link to="/EventPage">EventPage</Link>
+          </Menu.Item>
           <Menu.Item key="register">
             <Link to="/register">Register</Link>
           </Menu.Item>
