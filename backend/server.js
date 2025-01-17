@@ -4,7 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const eventRoutes = require('./routes/eventRoutes'); 
-  
+
 // Load environment variables
 dotenv.config();
 
@@ -13,10 +13,17 @@ connectDB();
 
 // Initialize Express app
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-// Use routes   here 
+// Configure CORS to allow frontend access
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow only frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true // If you're using cookies or authentication
+}));
+
+app.use(express.json()); // Parse incoming JSON requests
+
+// Use routes
 app.use('/api/users', userRoutes); 
 app.use('/api/events', eventRoutes);
 
@@ -28,4 +35,3 @@ app.get('/', (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
- 

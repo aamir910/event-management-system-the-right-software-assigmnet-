@@ -1,15 +1,28 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
-import axios from 'axios';
 import styles from '../styles/Register_login.module.css';
 
 const Register = () => {
   const handleRegister = async (values) => {
     try {
       console.log("values here is the value", values);
-      await axios.post('http://localhost:5000/api/users/register', values);
-      message.success("Registration successful!");
-      // Redirect to login after successful registration
+      
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Ensures the server reads JSON data
+        },
+        body: JSON.stringify(values),
+        credentials: 'include' // Enable if backend requires authentication (optional)
+      });
+
+      if (response.ok) {
+        message.success("Registration successful!");
+        // Redirect to login after successful registration
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
     } catch (error) {
       console.error('Registration failed:', error);
       message.error(`Registration failed: ${error.message || "Unknown error"}`);

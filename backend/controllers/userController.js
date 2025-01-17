@@ -1,9 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User.js');
+const User = require('../models/userModel'); 
 
 // Register new user
 const registerUser = async (req, res) => {
+  console.log( req.body ," req.body")
   const { name, email, password } = req.body;
   try {
     console.log(name ,email ,password ,"here are the values there " )
@@ -24,14 +25,14 @@ const registerUser = async (req, res) => {
   //  console.log(name ,email ,password ,"here are the values there " )
     console.log(user  ,"user " )
     await user.save();
-
-
     return res.status(201).json({
       message: 'User registered successfully',
       user: { id: user._id, name: user.name, email: user.email },
     });
+
+
   } catch (error) {
-    console.log(name ,email ,password ,"here are the values there " )
+    console.log("here is the error accour there which i did not understand there " )
     console.error(error );
     res.status(500).json({ message: 'Server error' });
   }

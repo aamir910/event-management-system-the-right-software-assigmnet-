@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import styles from '../styles/Register_login.module.css';  // Keep the styles
 
 const Login = ({ onLogin }) => {
@@ -11,14 +10,29 @@ const Login = ({ onLogin }) => {
   const handleLogin = async (values) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', values);
-      const { token } = response.data;
-      localStorage.setItem('authToken', token);
-      onLogin(token);
-      message.success('Login successful!');
-      navigate('/dashboard');
+      const response = await fetch('http://localhost:5000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+        credentials: 'include', // Optional: for session-based authentication
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const { token } = data;
+
+        localStorage.setItem('authToken', token);
+        onLogin(token);
+        message.success('Login successful!');
+        navigate('/dashboard');
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
     } catch (error) {
-      message.error('Login failed. Please try again.');
+      message.error(`Login failed: ${error.message}`);
       setLoading(false);
     }
   };
