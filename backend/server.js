@@ -16,8 +16,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Use routes
-app.use('/api/users', userRoutes);
+// Use routes   here 
+app.use('/api/users', userRoutes); 
 app.use('/api/events', eventRoutes);
 
 // Basic Route
