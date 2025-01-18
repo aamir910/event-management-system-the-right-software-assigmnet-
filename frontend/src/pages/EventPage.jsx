@@ -9,7 +9,7 @@ const EventPage = () => {
   const [editingEvent, setEditingEvent] = useState(null);
   const [form] = Form.useForm();
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetchEvents();
@@ -18,7 +18,7 @@ const EventPage = () => {
   const fetchEvents = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/events', {
+      const res = await fetch('http://localhost:5000/api/events/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error('Failed to fetch');
@@ -45,6 +45,7 @@ const EventPage = () => {
 
   const handleOk = async () => {
     try {
+      console.log(token ," here is the token there ")
       const values = await form.validateFields();
       const eventData = {
         ...values,
@@ -53,7 +54,7 @@ const EventPage = () => {
 
       const url = editingEvent
         ? `http://localhost:5000/api/events/${editingEvent._id}`
-        : 'http://localhost:5000/api/events';
+        : 'http://localhost:5000/api/events/create';
       const method = editingEvent ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
