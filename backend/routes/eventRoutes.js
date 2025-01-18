@@ -15,4 +15,6 @@ router.put('/update/:id', authMiddleware, updateEvent);
 // Delete event (Protected route)
 router.delete('/delete/:id', authMiddleware, deleteEvent);
 
+router.get('/user', authMiddleware, getAllEvents);
+
 module.exports = router;

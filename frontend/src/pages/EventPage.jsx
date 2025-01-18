@@ -18,7 +18,7 @@ const EventPage = () => {
   const fetchEvents = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/events/all', {
+      const res = await fetch('http://localhost:5000/api/events/user', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error('Failed to fetch');
@@ -29,6 +29,7 @@ const EventPage = () => {
     }
     setLoading(false);
   };
+  
 
   const showModal = (event = null) => {
     setEditingEvent(event);

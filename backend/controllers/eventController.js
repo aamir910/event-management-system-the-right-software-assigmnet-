@@ -24,13 +24,15 @@ const createEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find();
+    const userId = req.user.userId;  // Get the logged-in user's ID
+    const events = await Event.find({ createdBy: userId });
     res.json(events);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 // Update an event
 const updateEvent = async (req, res) => {
