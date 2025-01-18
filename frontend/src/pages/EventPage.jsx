@@ -53,7 +53,7 @@ const EventPage = () => {
       };
 
       const url = editingEvent
-        ? `http://localhost:5000/api/events/${editingEvent._id}`
+        ? `http://localhost:5000/api/events/update/${editingEvent._id}`
         : 'http://localhost:5000/api/events/create';
       const method = editingEvent ? 'PUT' : 'POST';
 
@@ -77,7 +77,9 @@ const EventPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+      
+      console.log(token ,  id  , " here is the token there ")
+      const res = await fetch(`http://localhost:5000/api/events/delete/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -75,8 +75,8 @@ const deleteEvent = async (req, res) => {
     if (event.createdBy.toString() !== req.user.userId && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Permission denied' });
     }
+    await Event.findByIdAndDelete(eventId);
 
-    await event.remove();
     res.json({ message: 'Event deleted successfully' });
   } catch (error) {
     console.error(error);
